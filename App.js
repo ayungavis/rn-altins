@@ -7,19 +7,26 @@
  * @lint-ignore-every XPLATJSCOPYRIGHT1
  */
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
+import { NavigationActions } from 'react-navigation';
 
 // import MainNavigator from './src/screens/main/MainNavigator';
-import AuthNavigator from './src/screens/auth/AuthNavigator';
+import SwitchNavigator from './src/screens/auth/AuthNavigator';
+
+import store from 'library/redux/store';
 
 export default class App extends Component {
-  componentDidMount() {
+  componentWillMount() {
     SplashScreen.hide();
   }
 
   render() {
-    return <AuthNavigator />
+    return (
+    	<Provider store={store}>
+    		<SwitchNavigator />
+    	</Provider>
+    )
   }
 }

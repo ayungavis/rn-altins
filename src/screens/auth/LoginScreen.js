@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, StatusBar, ImageBackground, Image, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, StatusBar, TouchableWithoutFeedback, AsyncStorage } from 'react-native';
 import { Item, Label, Input, Form } from 'native-base';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { RectButton } from 'react-native-gesture-handler';
 import * as Animatable from 'react-native-animatable';
+import { connect } from 'react-redux';
+
+import { getStatus, postLogin, postRegister } from 'library/redux/actions/auth';
 
 import fonts from 'res/fonts';
 import colors from 'res/colors';
@@ -15,8 +18,48 @@ class LoginScreen extends Component {
 	constructor () {
 		super ()
 		this.state = {
-			toggledOn: false
+			toggledOn: false,
+			username: '',
+			email: '',
+			password: ''
 		}
+	}
+
+	handleLogin () {
+		this.props.dispatch(postLogin({
+			email: this.state.email,
+			password: this.state.password
+		}))
+		.then(res => {
+			AsyncStorage.setItem('token', this.props.auth.auth.accessToken.token)
+			AsyncStorage.setItem('id', this.props.auth.auth.user.id)
+			AsyncStorage.setItem('email', this.props.auth.auth.user.email)
+
+			console.log('token:', this.props.auth.auth.accessToken.token)
+			console.log('id', this.props.auth.auth.user.id)
+			console.log('email', this.props.auth.auth.user.email)
+
+			this.props.navigation.navigate('Home')	
+		})
+	}
+
+	handleRegister () {
+		this.props.dispatch(postRegister({
+			username: this.state.username,
+			email: this.state.email,
+			password: this.stat.password
+		}))
+		.then(res => {
+			AsyncStorage.setItem('token', this.props.auth.auth.accessToken.token)
+			AsyncStorage.setItem('id', this.props.auth.auth.user.id)
+			AsyncStorage.setItem('email', this.props.auth.auth.user.email)
+
+			console.log('token:', this.props.auth.auth.accessToken.token)
+			console.log('id', this.props.auth.auth.user.id)
+			console.log('email', this.props.auth.auth.user.email)
+
+			this.props.navigation.navigate('Home')
+		})
 	}
 
 	handleChangeSize () {
@@ -83,20 +126,20 @@ class LoginScreen extends Component {
 						<Form style={styles.form}>
 							<Item inlineLabel>
 								{/*<Label style={styles.label}>Username</Label>*/}
-								<Input style={styles.input} autoFocus={this.registerAutoFocus()} placeholder='Username' />
+								<Input style={styles.input} placeholder='Username' onChangeText={(text) => this.setState({ username: text })} />
 							</Item>
 							<Item inlineLabel>
 								{/*<Label style={styles.label}>Email</Label>*/}
-								<Input style={styles.input} placeholder='Email' />
+								<Input style={styles.input} placeholder='Email' onChangeText={(text) => this.setState({ email: text })} />
 							</Item>
 							<Item inlineLabel>
 								{/*<Label style={styles.label}>Password</Label>*/}
-								<Input style={styles.input} secureTextEntry={true} placeholder='Password' />
+								<Input style={styles.input} secureTextEntry={true} placeholder='Password' onChangeText={(text) => this.setState({ password: text })} />
 							</Item>
 						</Form>
 					</Animatable.View>
 					<Animatable.View animation={this.registerFormToggle()}>
-						<RectButton style={styles.registerButton}>
+						<RectButton style={styles.registerButton} onPress={() => this.handleRegister()} >
 							<Text style={styles.registerButtonText}>Sign up</Text>
 						</RectButton>
 					</Animatable.View>
@@ -113,15 +156,15 @@ class LoginScreen extends Component {
 						<Form style={styles.form}>
 							<Item inlineLabel>
 								{/*<Label style={styles.label}>Email</Label>*/}
-								<Input style={styles.input} autoFocus={this.loginAutoFocus()} placeholder='Email' />
+								<Input style={styles.input} placeholder='Email'  onChangeText={(text) => this.setState({ email: text })} />
 							</Item>
 							<Item inlineLabel>
 								{/*<Label style={styles.label}>Password</Label>*/}
-								<Input style={styles.input} secureTextEntry={true} placeholder='Password' />
+								<Input style={styles.input} secureTextEntry={true} placeholder='Password' onChangeText={(text) => this.setState({ password: text })} />
 							</Item>
 						</Form>
 					</Animatable.View>
-					<RectButton style={styles.loginButton}>
+					<RectButton style={styles.loginButton} onPress={() => this.handleLogin()}>
 						<Text style={styles.loginButtonText}>Log in</Text>
 					</RectButton>
 					<TouchableWithoutFeedback>
@@ -133,7 +176,13 @@ class LoginScreen extends Component {
 	}
 }
 
-export default LoginScreen
+const mapStateToProps = (state) => {
+	return {
+		auth: state.auth
+	}
+}
+
+export default connect(mapStateToProps)(LoginScreen)
 
 const styles = StyleSheet.create({
 	imageBackground: {

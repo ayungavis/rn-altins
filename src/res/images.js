@@ -1,9 +1,10 @@
-const host = 'http://img.udah.pw/altins';
+import server from './server';
 
 const images = {
 	login: {
-		background: host + '/login-background.png',
-		shape: host + '/login-shape.png'	
+		background: server.images + '/login-background.png',
+		shape: server.images + '/login-shape.png',
+		splash: server.images + '/logo-splash.png'	
 	} 
 }
 

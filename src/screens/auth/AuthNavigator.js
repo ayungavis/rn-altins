@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { createStackNavigator, createSwitchNavigator, createAppContainer } from 'react-navigation';
 
 import MainNavigator from '../main/MainNavigator';
 
 import LoginScreen from './LoginScreen';
 import RegisterScreen from './RegisterScreen';
+import AuthLoadingScreen from './AuthLoadingScreen'
 
 const AuthNavigator = createStackNavigator({
 	Login: { screen: LoginScreen },
@@ -15,4 +16,12 @@ const AuthNavigator = createStackNavigator({
 	headerMode: 'none'
 })
 
-export default createAppContainer(AuthNavigator)
+const SwitchNavigator = createSwitchNavigator({
+	AuthLoading: { screen: AuthLoadingScreen },
+	Login: { screen: AuthNavigator },
+	Home: {screen: MainNavigator }
+}, {
+	initialRouteName: 'AuthLoading'
+})
+
+export default createAppContainer(SwitchNavigator)
