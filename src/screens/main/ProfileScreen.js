@@ -15,7 +15,8 @@ import Styles from 'res/styles';
 class ProfileScreen extends Component {
 	_renderBackground () {
 		return (
-			<Image style={styles.coverImage} source={{ uri: 'http://img.udah.pw/products/10/1.png' }} />
+			/*<Image style={styles.coverImage} source={{ uri: 'http://img.udah.pw/products/10/1.png' }} />*/
+			<Image style={styles.coverImage} source={{ uri: 'https://wallup.net/wp-content/uploads/2016/04/06/326678-portrait_display-nature-trees-forest-fire-wood-leaves-dark-evening-branch-bonfires.jpg' }}></Image>
 		)
 	}
 
@@ -42,7 +43,7 @@ class ProfileScreen extends Component {
 				<View style={Styles.container}>
 					<View style={styles.headerLayout}>
 						<View style={styles.headerLeft}>
-							<View style={styles.photoProfile}></View>
+							<Image style={styles.photoProfile} source={{ uri: 'https://s3.amazonaws.com/cms-assets.tutsplus.com/uploads/users/810/profiles/19338/profileImage/profile-square-extra-small.png' }}></Image>
 						</View>
 						<View style={styles.headerMiddle}>
 							<Text style={styles.headerName} numberOfLines={2}>Wahyu Adi Kurniawan</Text>

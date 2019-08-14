@@ -21,7 +21,7 @@ const SwitchNavigator = createSwitchNavigator({
 	Login: { screen: AuthNavigator },
 	Home: {screen: MainNavigator }
 }, {
-	initialRouteName: 'AuthLoading'
+	initialRouteName: 'Home'
 })
 
 export default createAppContainer(SwitchNavigator)

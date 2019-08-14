@@ -40,7 +40,7 @@ class HomeScreen extends Component {
 							<Text style={styles.headerTitle}></Text>
 						</View>
 						<View style={styles.headerRight}>
-							<View style={styles.headerAvatar}></View>
+							<Image style={styles.headerAvatar} source={{ uri: 'https://annemariesegal.files.wordpress.com/2017/06/img_0422-linkedin-size-smiling-man-in-suit.png' }}></Image>
 						</View>
 					</View>
 					<View style={styles.searchLayout}>
@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
 		height: 40,
 		width: 40,
 		borderRadius: 50,
-		backgroundColor: 'grey'
+		// backgroundColor: 'grey'
 	},
 	searchLayout: {
 		flexDirection: 'row',
